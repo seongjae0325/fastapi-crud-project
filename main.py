@@ -36,3 +36,9 @@ def get_city(city_id: int):
     cur_time = r.json()["datetime"]
 
     return {"name": city["name"], "timezone": city["timezone"], "current_time": cur_time}
+
+@app.delete("/cities/{city_id}")
+def delete_city(city_id: int):
+    db.pop(city_id-1)
+
+    return {}
