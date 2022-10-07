@@ -27,3 +27,12 @@ def get_cities():
         cur_time = r.json()["datetime"]
         results.append({"name": city["name"], "timezone": city["timezone"], "current_time": cur_time})
     return results
+
+@app.get("/cities/{city_id}")
+def get_city(city_id: int):
+    city = db[city_id-1]
+    strs = f"http://worldtimeapi.org/api/timezone/{city['timezone']}"
+    r = requests.get(strs)
+    cur_time = r.json()["datetime"]
+
+    return {"name": city["name"], "timezone": city["timezone"], "current_time": cur_time}
